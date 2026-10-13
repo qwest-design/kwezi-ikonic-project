@@ -262,3 +262,10 @@ html[data-custom-cursor] :is(input, textarea, select, [contenteditable="true"]) 
 html[data-ripple-on] [data-ripple] img {
   scale: none !important;
 }
+
+/* Reveal masks clip each line; extend them below the baseline so descenders (g, y, p)
+   aren't cut off on tight display line-heights. The negative margin keeps layout unchanged. */
+.reveal-line-mask {
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}

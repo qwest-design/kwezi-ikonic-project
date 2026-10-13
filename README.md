@@ -60,6 +60,28 @@ All of it is mounted once in `src/app/layout.tsx`; components live in `src/compo
 - `SealZone` (`src/components/three/SealZone.tsx`) lets server components set the seal's pose for a block of content. `SEAL_PARKED` moves it out of the way.
 - Smooth scroll is paused during page transitions so wheel momentum can't carry onto the next page.
 
+## Capabilities, Studio and Contact
+
+- Copy for all three pages lives in `src/content/pages.ts`; `[TO SUPPLY]` marks what's still needed. Social profile URLs live in `src/content/social.ts` (empty = hidden).
+- **/capabilities:** one section per discipline (anchors `#strategy`, `#identity`, `#digital`, `#motion`), then the Four Ds band (`src/components/capabilities/FourDs.tsx`): four screens tall, the seal travels along the line at mid-screen.
+- **/studio:** beliefs step one per screen (`src/components/studio/Beliefs.tsx`), team grid (greyscale, colour on hover or focus), client wall.
+- **/contact:** `src/components/contact/BriefForm.tsx` runs the four steps; schemas shared with the server are in `src/lib/brief.ts`. The server action `src/app/contact/actions.ts` validates again with zod, ignores honeypot submissions, allows 5 sends per IP per hour (in memory, per server instance), and sends with Resend.
+
+### Email setup (Resend)
+
+1. Create a Resend account and add the domain `ikonicdesigns.co.za` (region: Ireland, eu-west-1).
+2. Add the DNS records Resend shows at your DNS host. They look like this; copy the exact values from Resend, especially the DKIM key:
+
+| Type | Name | Value | Purpose |
+| --- | --- | --- | --- |
+| TXT | `resend._domainkey` | `p=MIGf...` (long key from Resend) | DKIM: proves mail is really from you |
+| MX | `send` | `feedback-smtp.eu-west-1.amazonses.com` (priority 10) | Bounce handling for SPF |
+| TXT | `send` | `v=spf1 include:amazonses.com ~all` | SPF: authorises Resend to send |
+| TXT | `_dmarc` | `v=DMARC1; p=none;` | DMARC (recommended; skip if you already have one) |
+
+   These sit on the `send.` subdomain, so they don't touch your existing mailbox records.
+3. When Resend shows the domain as Verified, create an API key and set `RESEND_API_KEY` and `CONTACT_TO` (see `.env.example`) in `.env.local` and in Vercel.
+
 ## Token utilities
 
 `bg-ink text-bone text-mist bg-graphite text-signal`, `text-hero text-h1 text-h2 text-h3 text-body`, `type-label` (13px uppercase +0.08em), `font-display-tight font-accent-italic font-mono`, spacing `p-s1`..`p-s7` (8, 16, 24, 40, 64, 104, 168), `grid-site` for the 12/4 column grid, `gap-gutter`, `px-margin`.
