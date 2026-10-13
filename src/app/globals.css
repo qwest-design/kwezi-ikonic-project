@@ -1,0 +1,264 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+/* ------------------------------------------------------------------
+   Ikonic design tokens
+   Raw values live on :root so plain CSS, GSAP and R3F can read them.
+   @theme maps them to Tailwind utilities (bg-ink, text-bone, p-s4 ...).
+   ------------------------------------------------------------------ */
+
+:root {
+  /* Colour */
+  --ink: #0b0b0c;
+  --bone: #f2efe9;
+  --graphite: #1a1a1d;
+  --mist: #8a8a8f;
+  --signal: #ff4d1f; /* placeholder until brand colour is confirmed */
+
+  /* Spacing scale */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 104px;
+  --space-7: 168px;
+
+  /* Grid (mobile first: 4 columns, 16px margins) */
+  --grid-columns: 4;
+  --grid-gutter: 16px;
+  --grid-margin: 16px;
+
+  /* Fluid type, linear between a 375px and 1440px viewport */
+  --text-hero-size: clamp(4.5rem, 0.803rem + 15.775vw, 15rem); /* 72 -> 240 */
+  --text-h1-size: clamp(3.5rem, 1.211rem + 9.765vw, 10rem); /* 56 -> 160 */
+  --text-h2-size: clamp(2.5rem, 0.739rem + 7.512vw, 7.5rem); /* 40 -> 120 */
+  --text-h3-size: clamp(1.75rem, 1.31rem + 1.878vw, 3rem); /* 28 -> 48 */
+  --text-body-size: clamp(1.0625rem, 1.0185rem + 0.188vw, 1.1875rem); /* 17 -> 19 */
+  --text-label-size: 0.8125rem; /* 13, fixed */
+
+  /* Motion (mirrors src/lib/motion.ts) */
+  --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-power3-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --duration-entrance: 0.9s;
+  --duration-transition: 1.2s;
+  --duration-ui: 0.4s;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --grid-columns: 12;
+    --grid-gutter: 24px;
+    --grid-margin: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --grid-margin: 48px;
+  }
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-bone: var(--bone);
+  --color-graphite: var(--graphite);
+  --color-mist: var(--mist);
+  --color-signal: var(--signal);
+
+  --font-display: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-accent: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --text-hero: var(--text-hero-size);
+  --text-hero--line-height: 0.88;
+  --text-hero--letter-spacing: -0.04em;
+  --text-h1: var(--text-h1-size);
+  --text-h1--line-height: 0.9;
+  --text-h1--letter-spacing: -0.04em;
+  --text-h2: var(--text-h2-size);
+  --text-h2--line-height: 0.95;
+  --text-h2--letter-spacing: -0.04em;
+  --text-h3: var(--text-h3-size);
+  --text-h3--line-height: 1.05;
+  --text-h3--letter-spacing: -0.03em;
+  --text-body: var(--text-body-size);
+  --text-body--line-height: 1.55;
+  --text-label: var(--text-label-size);
+  --text-label--line-height: 1.3;
+  --text-label--letter-spacing: 0.08em;
+
+  --tracking-display: -0.04em;
+
+  --spacing-s1: var(--space-1);
+  --spacing-s2: var(--space-2);
+  --spacing-s3: var(--space-3);
+  --spacing-s4: var(--space-4);
+  --spacing-s5: var(--space-5);
+  --spacing-s6: var(--space-6);
+  --spacing-s7: var(--space-7);
+  --spacing-gutter: var(--grid-gutter);
+  --spacing-margin: var(--grid-margin);
+
+  --ease-expo-out: var(--ease-expo-out);
+  --ease-power3-in-out: var(--ease-power3-in-out);
+}
+
+/* ------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------ */
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: var(--ink);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* html paints the ink background so the fixed 3D canvas can sit behind content. */
+  body {
+    background: transparent;
+    color: var(--bone);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-body-size);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--signal);
+    color: var(--ink);
+  }
+
+  /* Visible focus for keyboard users everywhere */
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+}
+
+/* ------------------------------------------------------------------
+   Layout + type helpers
+   ------------------------------------------------------------------ */
+
+@utility grid-site {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+  padding-inline: var(--grid-margin);
+}
+
+@utility font-display-tight {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: var(--tracking-display);
+}
+
+@utility font-accent-italic {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Label: 13px uppercase, +0.08em. Use with text-label or on its own. */
+@utility type-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label-size);
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Skip link: hidden until focused */
+@utility skip-link {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+  padding: var(--space-1) var(--space-2);
+  background: var(--bone);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  transform: translateY(-200%);
+  transition: transform var(--duration-ui) var(--ease-expo-out);
+
+  &:focus-visible {
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Site chrome
+   ------------------------------------------------------------------ */
+
+/* Repeat visit in this tab: the inline head script sets this before first paint. */
+html[data-intro="done"] .preloader {
+  display: none;
+}
+
+/* The seal stays visible above the page-transition panel. */
+html[data-transition] .scene-layer {
+  z-index: 70;
+}
+
+/* Custom cursor active: hide the native one except where typing needs it. */
+html[data-custom-cursor],
+html[data-custom-cursor] * {
+  cursor: none;
+}
+html[data-custom-cursor] :is(input, textarea, select, [contenteditable="true"]) {
+  cursor: auto;
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion: fades only, no smooth-scroll hijack
+   ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-property: opacity !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Hero scroll cue: a signal line dropping through its track. Static under reduced motion. */
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-cue-line {
+    animation: scroll-cue 1.8s var(--ease-power3-in-out) infinite;
+  }
+}
+
+/* Work-card liquid hover. While the WebGL plane draws a frame, hide its DOM image and
+   backdrop so the canvas behind shows through. With ripples on, the CSS scale is off;
+   on touch or reduced motion it stays as the fallback. */
+[data-ripple][data-ripple-live] {
+  background-color: transparent !important;
+}
+[data-ripple][data-ripple-live] img {
+  opacity: 0;
+}
+html[data-ripple-on] [data-ripple] img {
+  scale: none !important;
+}

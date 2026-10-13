@@ -1,0 +1,64 @@
+"use client";
+
+import { Component, useEffect, useState, type ReactNode } from "react";
+import dynamic from "next/dynamic";
+
+const SceneCanvas = dynamic(() => import("./SceneCanvas"), { ssr: false, loading: () => null });
+
+/**
+ * Defers all 3D (three, R3F, drei, postprocessing and the HDRI) until the page has
+ * loaded, fonts have swapped and the browser is idle, so hero text paints first
+ * and the 3D bundle never competes with LCP. Renders nothing until then.
+ */
+export function SceneLoader() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (!supportsWebGL()) return;
+    let cancelled = false;
+    const idle = (cb: () => void) => {
+      if (typeof window.requestIdleCallback === "function") window.requestIdleCallback(cb, { timeout: 1500 });
+      else setTimeout(cb, 200);
+    };
+
+    const start = () =>
+      document.fonts.ready.then(() =>
+        requestAnimationFrame(() => requestAnimationFrame(() => idle(() => !cancelled && setReady(true)))),
+      );
+
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+
+    return () => {
+      cancelled = true;
+      window.removeEventListener("load", start);
+    };
+  }, []);
+
+  if (!ready) return null;
+  return (
+    <SceneBoundary>
+      <SceneCanvas />
+    </SceneBoundary>
+  );
+}
+
+function supportsWebGL() {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(canvas.getContext("webgl2") ?? canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
+/** No WebGL or a GPU failure: drop the scene silently; the page works without it. */
+class SceneBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
