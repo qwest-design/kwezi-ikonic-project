@@ -1,19 +1,45 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PagePlaceholder } from "@/components/PagePlaceholder";
-import { getProject, projects } from "@/content/work";
+import { Challenge, Craft, Idea } from "@/components/case-study/CaseStudySections";
+import { Impact, NextProject, Opener } from "@/components/case-study/CaseStudyClient";
+import { SEAL_PARKED, SealZone } from "@/components/three/SealZone";
+import { caseStudies, getCaseStudy, getNextCaseStudy } from "@/content/work";
 
 export function generateStaticParams() {
-  return projects.map(({ slug }) => ({ slug }));
+  return caseStudies.map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {
-  const project = getProject((await params).slug);
-  return { title: project?.title ?? "Work" };
+  const project = getCaseStudy((await params).slug);
+  if (!project) return { title: "Work" };
+  return {
+    title: project.title,
+    description: project.summary,
+    openGraph: { images: [{ url: project.hero.src, width: project.hero.width, height: project.hero.height, alt: project.hero.alt }] },
+  };
 }
 
-export default async function ProjectPage({ params }: PageProps<"/work/[slug]">) {
-  const project = getProject((await params).slug);
+/** Case study template: opener, challenge, idea, craft, impact with the stamp, next project. */
+export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]">) {
+  const { slug } = await params;
+  const project = getCaseStudy(slug);
   if (!project) notFound();
-  return <PagePlaceholder title={project.title} />;
+  const next = getNextCaseStudy(slug);
+  const index = caseStudies.findIndex((p) => p.slug === next.slug);
+
+  return (
+    <main key={slug} id="main" tabIndex={-1} className="outline-none">
+      <Opener project={project} />
+      {/* The seal turns edge-on at the left through the story, then parks while the images run. */}
+      <SealZone pose={{ x: -0.4, y: 0.05, rotY: 1.45, scale: 0.55, mobile: { x: -0.42, y: 0.3, scale: 0.4 } }}>
+        <Challenge project={project} />
+        <Idea project={project} />
+      </SealZone>
+      <SealZone pose={SEAL_PARKED}>
+        <Craft project={project} />
+      </SealZone>
+      <Impact project={project} />
+      <NextProject key={next.slug} next={next} index={index} total={caseStudies.length} />
+    </main>
+  );
 }

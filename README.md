@@ -51,6 +51,15 @@ All of it is mounted once in `src/app/layout.tsx`; components live in `src/compo
 
 `src/app/page.tsx` composes seven sections from `src/components/home`. All copy and data live in `src/content/home.ts`; anything marked PLACEHOLDER is waiting on real content. The Proof section renders only when `proof` has entries. The footer slot is `src/components/chrome/SiteFooter.tsx` (prompt 9).
 
+## Work and case studies
+
+- All case study content lives in `src/content/work.ts`; the Home page's selected work is derived from it. Anything containing `[TO SUPPLY]` is waiting on real copy, numbers or images. The Gardens and Door are the sample case studies; Project 03 to 05 keep the Home track at five cards.
+- Placeholder images live in `/public/work/<slug>/` (hero, craft-1, craft-2, layer-back, layer-mid, layer-front). Replace the files or point `media()` at real ones.
+- **/work** (`src/components/work/WorkExplorer.tsx`): discipline filters animate with GSAP Flip (all cards stay in the DOM; non-matching ones get `data-out` and are hidden). A Grid/List toggle; in list view on pointer devices the hovered row's image follows the cursor.
+- **/work/[slug]**: Opener, Challenge, Idea, Craft (full-bleed images plus a three-layer spread at 0.6x, 0.85x and 1.15x via `data-speed`), Impact with the stamp beside the results, then Next project. With motion allowed the Next panel is two screens tall; scrolling through it navigates to the next case study via the normal page transition. It only fires after the visitor has scrolled into it.
+- `SealZone` (`src/components/three/SealZone.tsx`) lets server components set the seal's pose for a block of content. `SEAL_PARKED` moves it out of the way.
+- Smooth scroll is paused during page transitions so wheel momentum can't carry onto the next page.
+
 ## Token utilities
 
 `bg-ink text-bone text-mist bg-graphite text-signal`, `text-hero text-h1 text-h2 text-h3 text-body`, `type-label` (13px uppercase +0.08em), `font-display-tight font-accent-italic font-mono`, spacing `p-s1`..`p-s7` (8, 16, 24, 40, 64, 104, 168), `grid-site` for the 12/4 column grid, `gap-gutter`, `px-margin`.

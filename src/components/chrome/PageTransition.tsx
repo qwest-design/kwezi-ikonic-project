@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { motion, prefersReducedMotion } from "@/lib/motion";
 import { siteStore } from "@/lib/siteStore";
-import { resetScroll } from "@/components/providers/SmoothScroll";
+import { getLenis, resetScroll } from "@/components/providers/SmoothScroll";
 
 const HALF = motion.transition.duration / 2; // 0.6s cover + 0.6s reveal = 1.2s
 
@@ -51,6 +51,8 @@ export function PageTransition() {
       const reduced = prefersReducedMotion();
       siteStore.setState({ transitioning: true });
       document.documentElement.dataset.transition = "on";
+      // No scrolling while covered: leftover wheel momentum would land on the new page.
+      getLenis()?.stop();
 
       const cover = reduced
         ? gsap.fromTo(el, { yPercent: 0, autoAlpha: 0 }, { autoAlpha: 1, duration: motion.reduced.duration })
@@ -70,6 +72,8 @@ export function PageTransition() {
           // Content can start its entrances as the panel lifts.
           siteStore.setState({ transitioning: false });
           reveal.then(() => {
+            // Scroll resumes once the panel has gone, so trackpad momentum can't carry over.
+            getLenis()?.start();
             delete document.documentElement.dataset.transition;
             gsap.set(el, { yPercent: 100, autoAlpha: 0 });
           });

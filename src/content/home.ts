@@ -3,6 +3,8 @@
  * Anything marked PLACEHOLDER is stand-in copy or data waiting on Kwezi.
  */
 
+import { caseStudies } from "./work";
+
 export type Capability = {
   index: string;
   title: string;
@@ -52,17 +54,17 @@ export const capabilities: { title: string; cards: Capability[]; link: { label: 
   link: { label: "Explore capabilities", href: "/capabilities" },
 };
 
-/** PLACEHOLDER projects: names, clients, tags, results and images all to be replaced. */
+/** Selected work comes from the case studies in src/content/work.ts. */
 export const selectedWork: { title: string; projects: HomeProject[]; allLink: { label: string; href: string } } = {
   title: "Work that earned the stamp.",
-  projects: [1, 2, 3, 4, 5].map((n) => ({
-    slug: `project-0${n}`,
-    name: `Project 0${n}`,
-    client: "Client to confirm",
-    tags: [["Strategy", "Identity"], ["Identity", "Digital"], ["Digital"], ["Motion", "Identity"], ["Strategy", "Digital"]][n - 1],
-    result: "Result line to come.",
-    image: `/work/placeholder-0${n}.svg`,
-    imageAlt: `Placeholder image for project 0${n}`,
+  projects: caseStudies.map((p) => ({
+    slug: p.slug,
+    name: p.title,
+    client: p.client,
+    tags: p.disciplines,
+    result: p.summary,
+    image: p.hero.src,
+    imageAlt: p.hero.alt,
   })),
   allLink: { label: "See all work", href: "/work" },
 };

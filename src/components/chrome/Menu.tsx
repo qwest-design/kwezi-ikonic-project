@@ -68,7 +68,8 @@ export function Menu() {
     const finish = () => {
       setMounted(false);
       setActive(null);
-      lenis?.start();
+      // A page transition keeps scrolling paused until its panel lifts.
+      if (!siteStore.getState().transitioning) lenis?.start();
       document.documentElement.style.overflow = "";
     };
 
