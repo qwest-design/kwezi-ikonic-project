@@ -35,7 +35,7 @@ export default function CapabilitiesPage() {
           <section
             id={d.title.toLowerCase()}
             aria-labelledby={`discipline-${d.index}`}
-            className="grid-site scroll-mt-s6 gap-y-s4 border-t border-bone/15 py-s7"
+            className="grid-site gap-y-s4 border-t border-bone/15 py-s7"
           >
             <p className="type-label col-span-full text-mist">
               <span className="text-signal">{d.index}</span> / <span id={`discipline-${d.index}`}>{d.title}</span>

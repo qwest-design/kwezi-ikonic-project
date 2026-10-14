@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap";
 import { motionConditions } from "@/lib/motion";
@@ -71,7 +72,14 @@ export function WhatWeDo() {
             <div className="flex items-start justify-between gap-s3">
               <span className="font-mono text-h3 text-signal">{card.index}</span>
               <h3 id={`cap-${card.index}`} className="font-display-tight text-h2">
-                {card.title}
+                {/* The link's ::after covers the whole card, so the card is the click target. */}
+                <Link
+                  href={`/capabilities#${card.title.toLowerCase()}`}
+                  data-cursor="view"
+                  className="after:absolute after:inset-0 after:z-10 focus-visible:outline-none after:focus-visible:outline-2 after:focus-visible:-outline-offset-4 after:focus-visible:outline-signal"
+                >
+                  {card.title}
+                </Link>
               </h3>
             </div>
             <div className="flex max-w-[34ch] flex-col gap-s2">

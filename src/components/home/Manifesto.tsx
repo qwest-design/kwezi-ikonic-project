@@ -42,7 +42,7 @@ export function Manifesto() {
   }, []);
 
   return (
-    <section ref={ref} aria-labelledby="home-manifesto-title" className="grid-site gap-y-s5 py-s7">
+    <section ref={ref} id="manifesto" aria-labelledby="home-manifesto-title" className="grid-site gap-y-s5 py-s7">
       <h2 id="home-manifesto-title" className="sr-only">
         Manifesto
       </h2>

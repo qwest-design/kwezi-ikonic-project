@@ -4,7 +4,8 @@ import { Reveal } from "@/components/motion/Reveal";
 import { SEAL_PARKED, SealZone } from "@/components/three/SealZone";
 import { Beliefs } from "@/components/studio/Beliefs";
 import { studioPage } from "@/content/pages";
-import { clients } from "@/content/home";
+import Link from "next/link";
+import { clientHref, clients } from "@/content/home";
 
 export const metadata: Metadata = {
   title: "Studio",
@@ -61,8 +62,9 @@ export default function StudioPage() {
             {clientsTitle}
           </Reveal>
           <ul className="col-span-full grid grid-cols-2 border-t border-l border-bone/15 sm:grid-cols-3 lg:grid-cols-5">
-            {clients.logos.map((c) => (
-              <li key={c.name} className="group relative aspect-[3/2] border-r border-b border-bone/15">
+            {clients.logos.map((c) => {
+              const href = clientHref(c);
+              const art = (
                 <div className="absolute inset-[22%]">
                   <Image src={c.logo} alt={c.name} fill unoptimized className="object-contain opacity-70 grayscale" />
                   <Image
@@ -74,8 +76,19 @@ export default function StudioPage() {
                     className="object-contain opacity-0 transition-opacity duration-(--duration-ui) group-hover:opacity-100"
                   />
                 </div>
-              </li>
-            ))}
+              );
+              return (
+                <li key={c.name} className="group relative aspect-[3/2] border-r border-b border-bone/15">
+                  {href ? (
+                    <Link href={href} data-cursor="view" className="absolute inset-0">
+                      {art}
+                    </Link>
+                  ) : (
+                    art
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </section>
       </SealZone>

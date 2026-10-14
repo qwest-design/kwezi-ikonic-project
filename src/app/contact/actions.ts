@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 import { Resend } from "resend";
 import { briefSchema, type Brief, type SendResult } from "@/lib/brief";
+import { isTestTransport, recordEmail, type OutboxEmail } from "@/lib/testOutbox";
 
 const FROM = "Ikonic website <website@ikonicdesigns.co.za>";
 const LIMIT = 5;
@@ -63,7 +64,8 @@ export async function sendBrief(input: unknown, honeypot: string): Promise<SendR
 
   const to = process.env.CONTACT_TO;
   const key = process.env.RESEND_API_KEY;
-  if (!to || !key) {
+  const testMode = isTestTransport();
+  if (!to || (!key && !testMode)) {
     console.error("Contact form: CONTACT_TO or RESEND_API_KEY is not set.");
     return { ok: false, reason: "failed" };
   }
@@ -79,16 +81,16 @@ export async function sendBrief(input: unknown, honeypot: string): Promise<SendR
           `<p style="font:14px/1.5 sans-serif;margin:0 0 16px"><strong>${escape(k)}</strong><br>${escape(v).replace(/\n/g, "<br>")}</p>`,
       )
       .join("");
+  const email: OutboxEmail = { from: FROM, to: [to], replyTo: brief.email, subject, text, html };
+
+  // Test mode: record instead of sending (see src/lib/testOutbox.ts).
+  if (testMode) {
+    recordEmail(email);
+    return { ok: true };
+  }
 
   try {
-    const { error } = await new Resend(key).emails.send({
-      from: FROM,
-      to: [to],
-      replyTo: brief.email,
-      subject,
-      text,
-      html,
-    });
+    const { error } = await new Resend(key).emails.send(email);
     if (error) {
       console.error("Contact form: Resend rejected the email.", error.name, error.message);
       return { ok: false, reason: "failed" };

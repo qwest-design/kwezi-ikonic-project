@@ -42,7 +42,24 @@ export function WorkExplorer({ projects }: { projects: CaseStudy[] }) {
     if (next === filter) return;
     flipState.current = Flip.getState(items());
     setFilter(next);
+    // Keep the choice in the URL (?discipline=identity) so it can be shared and survives a reload.
+    const url = new URL(location.href);
+    if (next === "All") url.searchParams.delete("discipline");
+    else url.searchParams.set("discipline", next.toLowerCase());
+    history.replaceState(history.state, "", url.pathname + url.search + url.hash);
   };
+
+  // Start from ?discipline= when the page is opened with one (no animation).
+  useEffect(() => {
+    const read = () => {
+      const param = new URLSearchParams(location.search).get("discipline")?.toLowerCase();
+      setFilter(FILTERS.find((f) => f.toLowerCase() === param) ?? "All");
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    };
+    read();
+    window.addEventListener("popstate", read);
+    return () => window.removeEventListener("popstate", read);
+  }, []);
 
   const chooseView = (next: View) => {
     if (next === view) return;

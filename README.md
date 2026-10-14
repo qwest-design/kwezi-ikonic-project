@@ -82,6 +82,22 @@ All of it is mounted once in `src/app/layout.tsx`; components live in `src/compo
    These sit on the `send.` subdomain, so they don't touch your existing mailbox records.
 3. When Resend shows the domain as Verified, create an API key and set `RESEND_API_KEY` and `CONTACT_TO` (see `.env.example`) in `.env.local` and in Vercel.
 
+## Footer and links
+
+- `src/components/chrome/SiteFooter.tsx` mirrors the live footer. **Its design is locked; only links may change.** The logo is a text stand-in until `Ikonic_000.png` is added to `/public/brand` and `FOOTER_LOGO` is set.
+- Social URLs: `src/content/social.ts`. Empty means the network isn't shown anywhere.
+- Anchor links (`#manifesto`, `/capabilities#identity`) scroll through Lenis and stop below the fixed header. The gap is html's `scroll-padding-top` in `globals.css`; change it there only.
+- /work filters are kept in the URL as `?discipline=identity`.
+- Client logos link to their case study when `caseStudy` is set on the client in `src/content/home.ts`.
+
+## Tests
+
+`npm run test:e2e` builds the site and runs Playwright against the production server:
+- `tests/links.spec.ts` crawls every page and fails on `href="#"`, empty or missing hrefs, any non-200 page, broken anchors, links that don't land where they point, and errors from clicking any button. It also checks the 404 page.
+- `tests/contact.spec.ts` fills in the brief and checks the email the server built (recipient, reply-to, subject, every answer). The test server runs with `CONTACT_TRANSPORT=test`, which records emails instead of sending them and enables `/api/test-outbox`. Never set it in production.
+
+First run on a new machine: `npx playwright install chromium`.
+
 ## Token utilities
 
 `bg-ink text-bone text-mist bg-graphite text-signal`, `text-hero text-h1 text-h2 text-h3 text-body`, `type-label` (13px uppercase +0.08em), `font-display-tight font-accent-italic font-mono`, spacing `p-s1`..`p-s7` (8, 16, 24, 40, 64, 104, 168), `grid-site` for the 12/4 column grid, `gap-gutter`, `px-margin`.

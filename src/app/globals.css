@@ -269,3 +269,8 @@ html[data-ripple-on] [data-ripple] img {
   padding-bottom: 0.14em;
   margin-bottom: -0.14em;
 }
+
+/* Native anchor jumps (no JS, reduced motion) stop below the fixed header. */
+html {
+  scroll-padding-top: 6rem;
+}

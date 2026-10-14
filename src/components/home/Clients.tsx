@@ -7,7 +7,8 @@ import { motionConditions } from "@/lib/motion";
 import { Reveal } from "@/components/motion/Reveal";
 import { getLenis } from "@/components/providers/SmoothScroll";
 import { useSealSection } from "@/components/three/useSealSection";
-import { clients, type Client } from "@/content/home";
+import Link from "next/link";
+import { clientHref, clients, type Client } from "@/content/home";
 
 const BASE_SPEED = 40; // px per second at rest
 
@@ -81,20 +82,34 @@ export function Clients() {
 function LogoList({ logos, duplicate = false }: { logos: Client[]; duplicate?: boolean }) {
   return (
     <ul className="flex shrink-0" aria-hidden={duplicate || undefined} aria-label={duplicate ? undefined : "Clients"}>
-      {logos.map((c) => (
-        <li key={c.name} className="group relative mx-s4 h-s5 w-[200px] shrink-0 md:mx-s5 md:w-[240px]">
-          {/* Grey layer is a static filter; hover only crossfades opacity. */}
-          <Image src={c.logo} alt={duplicate ? "" : c.name} fill unoptimized className="object-contain opacity-70 grayscale" />
-          <Image
-            src={c.logo}
-            alt=""
-            aria-hidden="true"
-            fill
-            unoptimized
-            className="object-contain opacity-0 transition-opacity duration-(--duration-ui) group-hover:opacity-100"
-          />
-        </li>
-      ))}
+      {logos.map((c) => {
+        const href = clientHref(c);
+        const art = (
+          <>
+            {/* Grey layer is a static filter; hover only crossfades opacity. */}
+            <Image src={c.logo} alt={duplicate ? "" : c.name} fill unoptimized className="object-contain opacity-70 grayscale" />
+            <Image
+              src={c.logo}
+              alt=""
+              aria-hidden="true"
+              fill
+              unoptimized
+              className="object-contain opacity-0 transition-opacity duration-(--duration-ui) group-hover:opacity-100"
+            />
+          </>
+        );
+        return (
+          <li key={c.name} className="group relative mx-s4 h-s5 w-[200px] shrink-0 md:mx-s5 md:w-[240px]">
+            {href ? (
+              <Link href={href} tabIndex={duplicate ? -1 : undefined} data-cursor="view" className="absolute inset-0">
+                {art}
+              </Link>
+            ) : (
+              art
+            )}
+          </li>
+        );
+      })}
     </ul>
   );
 }

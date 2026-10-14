@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { motion, prefersReducedMotion } from "@/lib/motion";
 import { siteStore } from "@/lib/siteStore";
-import { getLenis, resetScroll } from "@/components/providers/SmoothScroll";
+import { getLenis, resetScroll, scrollToHash } from "@/components/providers/SmoothScroll";
 
 const HALF = motion.transition.duration / 2; // 0.6s cover + 0.6s reveal = 1.2s
 
@@ -36,7 +36,16 @@ export function PageTransition() {
       if (!a || a.target === "_blank" || a.hasAttribute("download") || a.dataset.transition === "off") return;
       const url = new URL(a.href, location.href);
       if (url.origin !== location.origin) return;
-      if (url.pathname === location.pathname) return; // same page: anchors, or menu "current page"
+      if (url.pathname === location.pathname) {
+        // Same page with a hash: scroll there ourselves (smoothly, below the header).
+        if (url.hash && url.hash !== "#" && document.getElementById(decodeURIComponent(url.hash.slice(1)))) {
+          e.preventDefault();
+          if (siteStore.getState().menuOpen) siteStore.setState({ menuOpen: false });
+          history.pushState(history.state, "", url.pathname + url.search + url.hash);
+          scrollToHash(url.hash);
+        }
+        return; // otherwise the menu's "current page" link: nothing to do
+      }
       if (siteStore.getState().transitioning) {
         e.preventDefault();
         return;
@@ -89,12 +98,25 @@ export function PageTransition() {
   useEffect(() => {
     if (first.current) {
       first.current = false;
+      // Landed directly on a URL with a hash: pins and spacers shift layout after load,
+      // so re-measure and jump once everything has settled.
+      if (location.hash) {
+        const settle = () => {
+          ScrollTrigger.refresh();
+          scrollToHash(location.hash, { immediate: true });
+        };
+        const go = () => setTimeout(settle, 300);
+        if (document.readyState === "complete") go();
+        else window.addEventListener("load", go, { once: true });
+      }
       return;
     }
     resetScroll();
     // Let the new page's effects create their triggers first.
     const id = requestAnimationFrame(() => {
       ScrollTrigger.refresh();
+      // Arrived on a link with a hash (/capabilities#identity): jump to it under the panel.
+      if (location.hash) scrollToHash(location.hash, { immediate: true });
       pending.current?.resolve();
       pending.current = null;
     });

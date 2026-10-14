@@ -70,7 +70,7 @@ const parallaxSamples = [
 const routes = [
   { href: "/", label: "Home" },
   { href: "/work", label: "Work" },
-  { href: "/work/project-01", label: "Work / project 01" },
+  { href: "/work/the-gardens", label: "Work / The Gardens" },
   { href: "/capabilities", label: "Capabilities" },
   { href: "/studio", label: "Studio" },
   { href: "/contact", label: "Contact" },

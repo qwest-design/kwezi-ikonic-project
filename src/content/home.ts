@@ -25,7 +25,16 @@ export type HomeProject = {
 
 export type Stat = { value: number; prefix?: string; suffix?: string; label: string };
 
-export type Client = { name: string; logo: string };
+export type Client = {
+  name: string;
+  logo: string;
+  /** Slug of this client's case study, if there is one. Logos without one aren't links. */
+  caseStudy?: string;
+};
+
+/** Case study link for a client logo, only when that case study exists. */
+export const clientHref = (c: Client) =>
+  c.caseStudy && caseStudies.some((p) => p.slug === c.caseStudy) ? `/work/${c.caseStudy}` : undefined;
 
 export const hero = {
   headline: { before: "We make brands people ", accent: "remember", after: "." },

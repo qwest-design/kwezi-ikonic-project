@@ -17,6 +17,32 @@ export function getLenis() {
   return current;
 }
 
+/** Space left above anchor targets for the fixed header: html's scroll-padding-top (globals.css). */
+function headerOffset() {
+  return Number.parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
+}
+
+/**
+ * Scroll to the element a hash points at (#manifesto), through Lenis when it is
+ * running (smooth) or natively otherwise, leaving room for the fixed header.
+ * Returns false when the page has no such element.
+ */
+export function scrollToHash(hash: string, { immediate = false } = {}) {
+  const id = decodeURIComponent(hash.replace(/^#/, ""));
+  const el = id ? document.getElementById(id) : null;
+  if (!el) return false;
+  if (current) {
+    // Lenis already subtracts scroll-padding-top (and the target's scroll-margin-top).
+    current.scrollTo(el, { immediate, force: true });
+  } else {
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - headerOffset(), behavior: "auto" });
+  }
+  // Move focus for keyboard and screen reader users without a second jump.
+  if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
+  el.focus({ preventScroll: true });
+  return true;
+}
+
 /** Jump to the top immediately, with or without Lenis. */
 export function resetScroll() {
   if (current) current.scrollTo(0, { immediate: true, force: true });
@@ -29,7 +55,7 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (reduced) return;
 
-    const lenis = new Lenis({ autoRaf: false, anchors: true });
+    const lenis = new Lenis({ autoRaf: false });
     current = lenis;
     lenis.on("scroll", ScrollTrigger.update);
 
