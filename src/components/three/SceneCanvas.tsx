@@ -52,7 +52,7 @@ export default function SceneCanvas() {
         style={{ pointerEvents: "none" }}
       >
         <Suspense fallback={null}>
-          <Environment files="/hdri/studio_small_03_1k.hdr" environmentIntensity={1} />
+          <Environment files="/hdri/studio_small_03_512.hdr" environmentIntensity={1} />
           <Seal reducedMotion={reduced} onImpact={onImpact} />
           <StampRing ref={ring} onActiveChange={setRingActive} />
           <Ready onReady={() => setVisible(true)} />

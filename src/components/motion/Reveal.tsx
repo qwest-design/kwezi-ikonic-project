@@ -66,7 +66,9 @@ export function Reveal({
         type: "lines",
         mask: "lines",
         linesClass: "reveal-line",
-        aria: "auto",
+        // Lines keep whole words, so screen readers read the split text as is. ("auto"
+        // would put aria-label on the element, which isn't allowed on p, div or li.)
+        aria: "none",
         autoSplit: true,
         // Runs on first split and every re-split. Returning the tween lets SplitText
         // revert it before re-splitting, so lines never get stuck mid-animation.

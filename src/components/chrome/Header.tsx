@@ -42,13 +42,21 @@ export function Header() {
         el.toggleAttribute("data-scrolled", self.scroll() > 8);
         if (!window.matchMedia(motionConditions.full).matches) return show(true);
         if (siteStore.getState().menuOpen) return show(true);
+        // Keyboard users tabbing into the header must be able to see it.
+        if (el.contains(document.activeElement)) return show(true);
         if (self.scroll() < 120) return show(true);
         show(self.direction < 0);
       },
       onRefresh: (self) => setProgress(self.progress),
     });
 
-    return () => st.kill();
+    const onFocus = () => show(true);
+    el.addEventListener("focusin", onFocus);
+
+    return () => {
+      st.kill();
+      el.removeEventListener("focusin", onFocus);
+    };
   }, []);
 
   return (

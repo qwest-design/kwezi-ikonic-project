@@ -36,15 +36,14 @@ export default async function StudioPage() {
           <ul className="col-span-full grid grid-cols-2 gap-x-gutter gap-y-s5 md:grid-cols-3">
             {team.map((m) => (
               // Colour on hover or keyboard focus: the grey copy on top fades out (opacity only).
-              <li key={m.portrait} tabIndex={0} className="group flex flex-col gap-s2 outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal">
+              <li key={m.portrait} tabIndex={0} className="group flex flex-col gap-s2">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-graphite">
-                  <Image src={m.portrait} alt={`Portrait of ${m.name}`} fill unoptimized sizes="(min-width: 768px) 30vw, 45vw" className="object-cover" />
+                  <Image src={m.portrait} alt={`Portrait of ${m.name}`} fill sizes="(min-width: 768px) 30vw, 45vw" className="object-cover" />
                   <Image
                     src={m.portrait}
                     alt=""
                     aria-hidden="true"
                     fill
-                    unoptimized
                     sizes="(min-width: 768px) 30vw, 45vw"
                     className="object-cover grayscale transition-opacity duration-(--duration-ui) group-hover:opacity-0 group-focus-visible:opacity-0"
                   />
@@ -67,13 +66,13 @@ export default async function StudioPage() {
               const href = c.href;
               const art = (
                 <div className="absolute inset-[22%]">
-                  <Image src={c.logo} alt={c.name} fill unoptimized className="object-contain opacity-70 grayscale" />
+                  <Image src={c.logo} alt={c.name} fill sizes="240px" className="object-contain opacity-70 grayscale" />
                   <Image
                     src={c.logo}
                     alt=""
                     aria-hidden="true"
                     fill
-                    unoptimized
+                    sizes="240px"
                     className="object-contain opacity-0 transition-opacity duration-(--duration-ui) group-hover:opacity-100"
                   />
                 </div>

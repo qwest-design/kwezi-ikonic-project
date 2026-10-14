@@ -35,7 +35,7 @@ npm run lint
 - State: `useSealSection(ref, { pose })` holds a resting pose while a section spans the viewport centre. `useSealSection(ref, { from, to })` scrubs between two poses (the travel state), and `stampAtCenter: true` fires the stamp. Poses are viewport fractions plus rotations, with optional `mobile` overrides (`sealStore.ts`).
 - The canvas has no RAF of its own: `TickerDriver` advances it from `gsap.ticker`, so Lenis, GSAP and three.js share one loop. Under reduced motion it renders on demand only.
 - **Card ripples** (`CardRipples.tsx`): put `data-ripple` on any element that wraps a single `<img>` (object-cover). On hover, a plane in a second, pixel-sized overlay scene tracks that element's DOM rect each frame and redraws the image through a displacement shader (rings from the cursor plus a noise texture). Strength eases in over 0.4s and out over 0.6s. The DOM image is hidden only once the WebGL copy is ready. It's enabled only for `(hover: hover) and (pointer: fine)` without reduced motion, which sets `html[data-ripple-on]`. Otherwise cards fall back to the 1.03 CSS scale.
-- The HDRI is self-hosted: `/public/hdri/studio_small_03_1k.hdr` (Poly Haven, CC0).
+- The HDRI is self-hosted: `/public/hdri/studio_small_03_512.hdr` (Poly Haven, CC0), downsampled from the 1k file to 420 KB to keep 3D assets under 1 MB.
 
 ## Site chrome
 
@@ -110,6 +110,23 @@ post types, field names, the refresh plugin) is in `wordpress/README.md`.
 - `tests/contact.spec.ts` fills in the brief and checks the email the server built (recipient, reply-to, subject, every answer). The test server runs with `CONTACT_TRANSPORT=test`, which records emails instead of sending them and enables `/api/test-outbox`. Never set it in production.
 
 First run on a new machine: `npx playwright install chromium`.
+
+## Audit
+
+`tests/a11y.spec.ts` checks every page with reduced motion on (all text ends up
+visible) and keyboard-only (every Tab stop is on screen, not faded, and shows a
+focus ring). It runs with the other Playwright tests.
+
+Lighthouse (mobile) runs against a production build:
+
+```sh
+npx next build && npx next start -p 3400
+CHROME_PATH=/path/to/chrome npm run audit   # 3 runs per route, median kept
+```
+
+Results land in `audit/lighthouse.json`. In a browser with no GPU (headless test
+machines, PageSpeed Insights) the site skips the 3D seal, because software WebGL
+freezes the page; add `?3d=force` to a URL to render it anyway.
 
 ## Token utilities
 

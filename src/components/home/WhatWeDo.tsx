@@ -76,7 +76,7 @@ export function WhatWeDo() {
                 <Link
                   href={`/capabilities#${card.title.toLowerCase()}`}
                   data-cursor="view"
-                  className="after:absolute after:inset-0 after:z-10 focus-visible:outline-none after:focus-visible:outline-2 after:focus-visible:-outline-offset-4 after:focus-visible:outline-signal"
+                  className="after:absolute after:inset-0 after:z-10 focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:-outline-offset-4 focus-visible:after:outline-signal"
                 >
                   {card.title}
                 </Link>

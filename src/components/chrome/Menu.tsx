@@ -27,8 +27,21 @@ export function Menu() {
   const [mounted, setMounted] = useState(false);
   const [active, setActive] = useState<number | null>(null);
 
-  // Render while open or closing; unmount content when fully closed.
+  // Built ahead of time while the browser is idle (and at the latest on open), then kept:
+  // building it on the tap cost ~100ms of the tap's first paint (INP). While closed it is
+  // clipped away and inert, so nothing in it can be focused or read.
   if (open && !mounted) setMounted(true);
+  const wasOpen = useRef(false);
+  useEffect(() => {
+    if (mounted) return;
+    const build = () => setMounted(true);
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(build, { timeout: 4000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(build, 2000);
+    return () => window.clearTimeout(id);
+  }, [mounted]);
 
   useEffect(() => {
     const el = panel.current;
@@ -38,16 +51,24 @@ export function Menu() {
     const lenis = getLenis();
 
     if (open) {
-      lenis?.stop();
-      document.documentElement.style.overflow = "hidden";
-      const tl = gsap.timeline();
+      wasOpen.current = true;
+      // Locking scroll re-lays out the whole page, so it waits until the panel covers
+      // the screen; doing it on the tap held the tap's first paint (INP) for ~130ms.
+      const lockScroll = () => {
+        lenis?.stop();
+        document.documentElement.style.overflow = "hidden";
+      };
+      const tl = gsap.timeline({ paused: true });
       if (reduced) {
-        tl.set(el, { clipPath: "none" }).fromTo(el, { opacity: 0 }, { opacity: 1, duration: motion.reduced.duration });
+        tl.set(el, { clipPath: "none" })
+          .fromTo(el, { opacity: 0 }, { opacity: 1, duration: motion.reduced.duration })
+          .call(lockScroll);
       } else {
         // Mask rows only while they slide in, so focus outlines are not clipped later.
         const rows = el.querySelectorAll<HTMLElement>("[data-menu-row]");
         gsap.set(rows, { overflow: "hidden" });
         tl.eventCallback("onComplete", () => gsap.set(rows, { overflow: "visible" }));
+        tl.call(lockScroll, undefined, motion.entrance.duration);
         tl.fromTo(
           el,
           { clipPath: "inset(100% 0% 0% 0%)" },
@@ -58,15 +79,25 @@ export function Menu() {
           0.25,
         );
       }
-      el.querySelector<HTMLElement>("[data-menu-first]")?.focus({ preventScroll: true });
+      // Let the tap paint first, then start the wipe and move focus in.
+      let timer = 0;
+      const frame = requestAnimationFrame(() => {
+        timer = window.setTimeout(() => {
+          tl.play();
+          el.querySelector<HTMLElement>("[data-menu-first]")?.focus({ preventScroll: true });
+        });
+      });
       return () => {
+        cancelAnimationFrame(frame);
+        clearTimeout(timer);
         tl.kill();
+        lockScroll();
       };
     }
 
-    if (!mounted) return;
+    if (!wasOpen.current) return;
+    wasOpen.current = false;
     const finish = () => {
-      setMounted(false);
       setActive(null);
       // A page transition keeps scrolling paused until its panel lifts.
       if (!siteStore.getState().transitioning) lenis?.start();
@@ -133,6 +164,7 @@ export function Menu() {
       role="dialog"
       aria-modal="true"
       aria-label="Menu"
+      inert={!open}
       className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-graphite"
       style={{ clipPath: "inset(100% 0% 0% 0%)" }}
     >

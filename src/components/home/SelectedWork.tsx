@@ -124,7 +124,6 @@ export function SelectedWork({ projects }: { projects: HomeProject[] }) {
                       src={p.image}
                       alt={p.imageAlt}
                       fill
-                      unoptimized
                       sizes="(min-width: 768px) 45vw, 90vw"
                       className="object-cover transition-[scale] duration-(--duration-ui) ease-expo-out group-hover:scale-[1.03]"
                     />

@@ -19,6 +19,9 @@ export const inter = Inter({
   subsets: ["latin"],
   weight: "400",
   display: "swap",
+  // Not preloaded: the hero headline (the LCP) uses Inter Tight and Instrument Serif;
+  // body text swaps in on a size-matched fallback without shifting layout.
+  preload: false,
   variable: "--font-inter",
 });
 

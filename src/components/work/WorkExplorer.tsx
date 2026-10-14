@@ -151,7 +151,6 @@ function WorkGrid({ projects, filter }: { projects: CaseStudy[]; filter: Filter 
                 src={p.hero.src}
                 alt={p.hero.alt}
                 fill
-                unoptimized
                 priority={i < 3}
                 sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
                 className="object-cover transition-[scale] duration-(--duration-ui) ease-expo-out group-hover:scale-[1.03]"
@@ -275,7 +274,6 @@ function WorkList({ projects, filter }: { projects: CaseStudy[]; filter: Filter 
             src={p.hero.src}
             alt=""
             fill
-            unoptimized
             sizes="320px"
             className="object-cover transition-opacity duration-(--duration-ui)"
             style={{ opacity: active === p.slug ? 1 : 0 }}

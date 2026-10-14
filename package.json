@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test:e2e": "next build && playwright test"
+    "test:e2e": "next build && playwright test",
+    "audit": "node scripts/audit.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
@@ -31,6 +32,7 @@
     "@types/three": "^0.186.0",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
+    "lighthouse": "^13.5.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

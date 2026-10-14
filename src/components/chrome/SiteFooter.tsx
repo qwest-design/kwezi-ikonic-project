@@ -11,7 +11,7 @@ import { cacheLife } from "next/cache";
 import { socialLinks } from "@/content/social";
 
 /** The live footer logo (Ikonic_000.png, white wordmark). Set to null to fall back to the text wordmark. */
-const FOOTER_LOGO: { src: string; width: number; height: number } | null = { src: "/brand/Ikonic_000.png", width: 2597, height: 576 };
+const FOOTER_LOGO: { src: string; width: number; height: number } | null = { src: "/brand/Ikonic_000.png", width: 180, height: 40 };
 
 const pages = [
   { label: "Home", href: "/" },
@@ -121,7 +121,7 @@ export async function SiteFooter() {
         <div className="col-span-full flex flex-col items-start gap-s3 border-t border-bone/10 pt-s4 md:flex-row md:items-center md:justify-between">
           <Link href="/" aria-label="Ikonic Designs, home" className={linkClass}>
             {FOOTER_LOGO ? (
-              <Image src={FOOTER_LOGO.src} alt="Ikonic" width={FOOTER_LOGO.width} height={FOOTER_LOGO.height} unoptimized className="h-s4 w-auto" />
+              <Image src={FOOTER_LOGO.src} alt="Ikonic" width={FOOTER_LOGO.width} height={FOOTER_LOGO.height} className="h-s4 w-auto" />
             ) : (
               <span className="font-display-tight text-[1.75rem] leading-none text-bone">
                 Ikonic<span className="text-signal">.</span>

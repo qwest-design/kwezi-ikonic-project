@@ -43,10 +43,22 @@ export function SceneLoader() {
   );
 }
 
+/**
+ * WebGL with a real GPU. Software renderers (SwiftShader, llvmpipe: no GPU, a GPU
+ * the browser has blocklisted, or headless test machines such as PageSpeed) draw
+ * every frame on the CPU, which freezes the page, so they get the site without 3D.
+ */
 function supportsWebGL() {
   try {
     const canvas = document.createElement("canvas");
-    return !!(canvas.getContext("webgl2") ?? canvas.getContext("webgl"));
+    const gl = canvas.getContext("webgl2") ?? canvas.getContext("webgl");
+    if (!gl) return false;
+    // ?3d=force skips the software check, for testing the scene on machines without a GPU.
+    if (new URLSearchParams(location.search).get("3d") === "force") return true;
+    const info = gl.getExtension("WEBGL_debug_renderer_info");
+    const renderer = String(gl.getParameter(info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER));
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return !/swiftshader|llvmpipe|softpipe|software/i.test(renderer);
   } catch {
     return false;
   }

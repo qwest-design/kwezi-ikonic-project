@@ -7,7 +7,7 @@ import { useSealSection } from "@/components/three/useSealSection";
 import { manifesto } from "@/content/home";
 
 /**
- * 02 Manifesto. Each word scrubs from 20% to 100% opacity with scroll; the seal turns
+ * 02 Manifesto. Each word scrubs from 40% to 100% opacity (40% keeps 3:1 contrast on large text) with scroll; the seal turns
  * edge-on across the section. Reduced motion: words stay at full opacity.
  */
 export function Manifesto() {
@@ -23,10 +23,10 @@ export function Manifesto() {
     const mm = gsap.matchMedia();
     mm.add(motionConditions.full, () => {
       const splits = [...el.querySelectorAll<HTMLElement>("[data-manifesto-line]")].map((line) => {
-        const split = SplitText.create(line, { type: "words", aria: "auto" });
+        const split = SplitText.create(line, { type: "words", aria: "none" });
         gsap.fromTo(
           split.words,
-          { opacity: 0.2 },
+          { opacity: 0.4 },
           {
             opacity: 1,
             ease: "none",
@@ -49,14 +49,17 @@ export function Manifesto() {
       {manifesto.map((line, i) => (
         <p
           key={i}
-          data-manifesto-line
           className={
             i === 0
               ? "col-span-full font-display-tight text-h2 md:col-span-10"
               : "col-span-full font-display-tight text-h3 md:col-span-9 md:col-start-2"
           }
         >
-          {line}
+          {/* Screen readers get the sentence whole; the split copy is visual only. */}
+          <span className="sr-only">{line}</span>
+          <span aria-hidden="true" data-manifesto-line className="block">
+            {line}
+          </span>
         </p>
       ))}
     </section>

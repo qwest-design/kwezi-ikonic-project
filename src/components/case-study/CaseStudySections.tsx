@@ -20,7 +20,7 @@ export function BleedImage({ media, speed = 0.85, priority = false, className = 
   return (
     <div className={`relative overflow-hidden bg-graphite ${className}`}>
       <div data-speed={speed} className="absolute inset-x-0 -top-[20%] -bottom-[20%] will-change-transform">
-        <Image src={media.src} alt={media.alt} fill unoptimized priority={priority} sizes="100vw" className="object-cover" />
+        <Image src={media.src} alt={media.alt} fill priority={priority} sizes="100vw" className="object-cover" />
       </div>
     </div>
   );
@@ -90,7 +90,7 @@ function SpreadLayer({ media, speed, className, aspect }: { media: Media; speed:
   return (
     <div data-speed={speed} className={`absolute will-change-transform ${className}`}>
       <div className={`relative overflow-hidden rounded-sm bg-graphite ${aspect}`}>
-        <Image src={media.src} alt={media.alt} fill unoptimized sizes="(min-width: 768px) 60vw, 80vw" className="object-cover" />
+        <Image src={media.src} alt={media.alt} fill sizes="(min-width: 768px) 60vw, 80vw" className="object-cover" />
       </div>
     </div>
   );

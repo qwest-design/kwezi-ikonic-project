@@ -88,13 +88,13 @@ function LogoList({ logos, duplicate = false }: { logos: ClientLogo[]; duplicate
         const art = (
           <>
             {/* Grey layer is a static filter; hover only crossfades opacity. */}
-            <Image src={c.logo} alt={duplicate ? "" : c.name} fill unoptimized className="object-contain opacity-70 grayscale" />
+            <Image src={c.logo} alt={duplicate ? "" : c.name} fill sizes="240px" className="object-contain opacity-70 grayscale" />
             <Image
               src={c.logo}
               alt=""
               aria-hidden="true"
               fill
-              unoptimized
+              sizes="240px"
               className="object-contain opacity-0 transition-opacity duration-(--duration-ui) group-hover:opacity-100"
             />
           </>

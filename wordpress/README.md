@@ -83,9 +83,10 @@ curl -X POST https://ikonicdesigns.co.za/api/revalidate \
 
 ## 5. Images
 
-The image ripple on the work cards draws images in WebGL, which needs the media
-host to send `Access-Control-Allow-Origin` for the site's domain. If WordPress
-serves uploads from its own domain, add that header for `/wp-content/uploads/`
-(most hosts and CDNs have a setting; on Apache, `Header set
-Access-Control-Allow-Origin "https://ikonicdesigns.co.za"`). Without it the
-images still show; only the ripple is skipped.
+The site serves WordPress images through Next.js image optimisation (AVIF/WebP at the
+size each slot needs), which only accepts the host in `WORDPRESS_GRAPHQL_URL` and
+paths under `/wp-content/uploads/`. If media lives on another host (a CDN), add it
+to `images.remotePatterns` in `next.config.ts`.
+
+Because optimised images come from the site's own domain, the WebGL image ripple on
+the work cards works without any CORS setup on WordPress.

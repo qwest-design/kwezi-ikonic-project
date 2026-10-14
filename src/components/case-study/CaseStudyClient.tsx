@@ -122,7 +122,11 @@ export function NextProject({ next, index, total }: { next: CaseStudy; index: nu
           scrub: true,
           onUpdate: (self) => {
             if (self.progress < 0.9) armed = true;
-            if (armed && !fired && self.progress > 0.985 && self.direction > 0 && !siteStore.getState().transitioning) {
+            // Keyboard focus outside this panel (tabbing on into the footer) scrolls the
+            // page too; that is not a request for the next project.
+            const focus = document.activeElement;
+            const tabbingPast = !!focus?.matches(":focus-visible") && !el.contains(focus);
+            if (armed && !fired && !tabbingPast && self.progress > 0.985 && self.direction > 0 && !siteStore.getState().transitioning) {
               fired = true;
               link.current?.click();
             }
@@ -146,7 +150,7 @@ export function NextProject({ next, index, total }: { next: CaseStudy; index: nu
     <section ref={ref} aria-labelledby="case-next" className="relative h-svh data-[scroll=on]:h-[200svh]">
       <div className="sticky top-0 flex h-svh flex-col justify-between overflow-hidden py-s6">
         <div ref={image} aria-hidden="true" className="absolute inset-0 opacity-40 will-change-transform">
-          <Image src={next.hero.src} alt="" fill unoptimized sizes="100vw" className="object-cover" />
+          <Image src={next.hero.src} alt="" fill sizes="100vw" className="object-cover" />
           <div className="absolute inset-0 bg-ink/50" />
         </div>
         <div className="grid-site relative">

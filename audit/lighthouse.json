@@ -1,0 +1,106 @@
+[
+  {
+    "route": "/",
+    "performance": 96,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": 1862,
+    "cls": 0,
+    "tbt": 213,
+    "fcp": 759,
+    "lcpElement": "h1#home-hero-title",
+    "failing": [],
+    "perfOpportunities": []
+  },
+  {
+    "route": "/work",
+    "performance": 98,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": 2434,
+    "cls": 0,
+    "tbt": 35,
+    "fcp": 1209,
+    "lcpElement": "img.object-cover",
+    "failing": [],
+    "perfOpportunities": [
+      "unused-javascript 150ms"
+    ]
+  },
+  {
+    "route": "/work/the-gardens",
+    "performance": 99,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": 1879,
+    "cls": 0,
+    "tbt": 69,
+    "fcp": 797,
+    "lcpElement": "h1#case-title",
+    "failing": [],
+    "perfOpportunities": []
+  },
+  {
+    "route": "/work/door",
+    "performance": 98,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": 2364,
+    "cls": 0,
+    "tbt": 42,
+    "fcp": 1210,
+    "lcpElement": "img.object-cover",
+    "failing": [],
+    "perfOpportunities": [
+      "unused-javascript 150ms"
+    ]
+  },
+  {
+    "route": "/capabilities",
+    "performance": 99,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": 1855,
+    "cls": 0,
+    "tbt": 69,
+    "fcp": 757,
+    "lcpElement": "h1.col-span-full",
+    "failing": [],
+    "perfOpportunities": []
+  },
+  {
+    "route": "/studio",
+    "performance": 99,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": 2110,
+    "cls": 0,
+    "tbt": 45,
+    "fcp": 757,
+    "lcpElement": "h1.col-span-full",
+    "failing": [],
+    "perfOpportunities": [
+      "unused-javascript 150ms"
+    ]
+  },
+  {
+    "route": "/contact",
+    "performance": 99,
+    "accessibility": 100,
+    "bestPractices": 100,
+    "seo": 100,
+    "lcp": 1551,
+    "cls": 0,
+    "tbt": 74,
+    "fcp": 758,
+    "lcpElement": "h1.col-span-full",
+    "failing": [],
+    "perfOpportunities": []
+  }
+]
