@@ -10,11 +10,8 @@ import Link from "next/link";
 import { cacheLife } from "next/cache";
 import { socialLinks } from "@/content/social";
 
-/**
- * The live footer logo (Ikonic_000.png). Set to "/brand/Ikonic_000.png" once the
- * file is in /public/brand; until then the text wordmark stands in.
- */
-const FOOTER_LOGO: { src: string; width: number; height: number } | null = null;
+/** The live footer logo (Ikonic_000.png, white wordmark). Set to null to fall back to the text wordmark. */
+const FOOTER_LOGO: { src: string; width: number; height: number } | null = { src: "/brand/Ikonic_000.png", width: 2597, height: 576 };
 
 const pages = [
   { label: "Home", href: "/" },
