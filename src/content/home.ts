@@ -3,7 +3,7 @@
  * Anything marked PLACEHOLDER is stand-in copy or data waiting on Kwezi.
  */
 
-import { caseStudies } from "./work";
+import type { CaseStudy } from "./work";
 
 export type Capability = {
   index: string;
@@ -32,10 +32,6 @@ export type Client = {
   caseStudy?: string;
 };
 
-/** Case study link for a client logo, only when that case study exists. */
-export const clientHref = (c: Client) =>
-  c.caseStudy && caseStudies.some((p) => p.slug === c.caseStudy) ? `/work/${c.caseStudy}` : undefined;
-
 export const hero = {
   headline: { before: "We make brands people ", accent: "remember", after: "." },
   sub: "Ikonic is a South African brand and digital studio. We shape strategy, identity, websites and motion that earn their place in people’s minds and move the business behind them.",
@@ -63,20 +59,21 @@ export const capabilities: { title: string; cards: Capability[]; link: { label: 
   link: { label: "Explore capabilities", href: "/capabilities" },
 };
 
-/** Selected work comes from the case studies in src/content/work.ts. */
-export const selectedWork: { title: string; projects: HomeProject[]; allLink: { label: string; href: string } } = {
+/** Selected work: the cards come from the case studies (src/lib/content.ts). */
+export const selectedWork: { title: string; allLink: { label: string; href: string } } = {
   title: "Work that earned the stamp.",
-  projects: caseStudies.map((p) => ({
-    slug: p.slug,
-    name: p.title,
-    client: p.client,
-    tags: p.disciplines,
-    result: p.summary,
-    image: p.hero.src,
-    imageAlt: p.hero.alt,
-  })),
   allLink: { label: "See all work", href: "/work" },
 };
+
+export const toHomeProject = (p: CaseStudy): HomeProject => ({
+  slug: p.slug,
+  name: p.title,
+  client: p.client,
+  tags: p.disciplines,
+  result: p.summary,
+  image: p.hero.src,
+  imageAlt: p.hero.alt,
+});
 
 /** Proof numbers. Leave empty to hide the section; no figures have been supplied yet. */
 export const proof: Stat[] = [];

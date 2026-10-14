@@ -8,7 +8,8 @@ import { Reveal } from "@/components/motion/Reveal";
 import { getLenis } from "@/components/providers/SmoothScroll";
 import { useSealSection } from "@/components/three/useSealSection";
 import Link from "next/link";
-import { clientHref, clients, type Client } from "@/content/home";
+import { clients } from "@/content/home";
+import type { ClientLogo } from "@/lib/content";
 
 const BASE_SPEED = 40; // px per second at rest
 
@@ -17,12 +18,12 @@ const BASE_SPEED = 40; // px per second at rest
  * velocity (from Lenis) speeds them up. Hover crossfades a logo to full colour.
  * Reduced motion: rows stay still. Rows pause while off screen.
  */
-export function Clients() {
+export function Clients({ logos }: { logos: ClientLogo[] }) {
   const ref = useRef<HTMLElement>(null);
   useSealSection(ref, { pose: { x: -0.34, rotY: -0.5, scale: 0.6, mobile: { x: -0.25, y: 0.32, scale: 0.45 } } });
 
-  const half = Math.ceil(clients.logos.length / 2);
-  const rows = [clients.logos.slice(0, half), clients.logos.slice(half)];
+  const half = Math.ceil(logos.length / 2);
+  const rows = [logos.slice(0, half), logos.slice(half)];
 
   useEffect(() => {
     const el = ref.current;
@@ -79,11 +80,11 @@ export function Clients() {
   );
 }
 
-function LogoList({ logos, duplicate = false }: { logos: Client[]; duplicate?: boolean }) {
+function LogoList({ logos, duplicate = false }: { logos: ClientLogo[]; duplicate?: boolean }) {
   return (
     <ul className="flex shrink-0" aria-hidden={duplicate || undefined} aria-label={duplicate ? undefined : "Clients"}>
       {logos.map((c) => {
-        const href = clientHref(c);
+        const href = c.href;
         const art = (
           <>
             {/* Grey layer is a static filter; hover only crossfades opacity. */}

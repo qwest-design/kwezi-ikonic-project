@@ -3,14 +3,14 @@ import { notFound } from "next/navigation";
 import { Challenge, Craft, Idea } from "@/components/case-study/CaseStudySections";
 import { Impact, NextProject, Opener } from "@/components/case-study/CaseStudyClient";
 import { SEAL_PARKED, SealZone } from "@/components/three/SealZone";
-import { caseStudies, getCaseStudy, getNextCaseStudy } from "@/content/work";
+import { getCaseStudies, getCaseStudy, getNextCaseStudy } from "@/lib/content";
 
-export function generateStaticParams() {
-  return caseStudies.map(({ slug }) => ({ slug }));
+export async function generateStaticParams() {
+  return (await getCaseStudies()).map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/work/[slug]">): Promise<Metadata> {
-  const project = getCaseStudy((await params).slug);
+  const project = await getCaseStudy((await params).slug);
   if (!project) return { title: "Work" };
   return {
     title: project.title,
@@ -22,10 +22,9 @@ export async function generateMetadata({ params }: PageProps<"/work/[slug]">): P
 /** Case study template: opener, challenge, idea, craft, impact with the stamp, next project. */
 export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]">) {
   const { slug } = await params;
-  const project = getCaseStudy(slug);
+  const [project, next, all] = await Promise.all([getCaseStudy(slug), getNextCaseStudy(slug), getCaseStudies()]);
   if (!project) notFound();
-  const next = getNextCaseStudy(slug);
-  const index = caseStudies.findIndex((p) => p.slug === next.slug);
+  const index = all.findIndex((p) => p.slug === next.slug);
 
   return (
     <main key={slug} id="main" tabIndex={-1} className="outline-none">
@@ -39,7 +38,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
         <Craft project={project} />
       </SealZone>
       <Impact project={project} />
-      <NextProject key={next.slug} next={next} index={index} total={caseStudies.length} />
+      <NextProject key={next.slug} next={next} index={index} total={all.length} />
     </main>
   );
 }

@@ -8,7 +8,7 @@ import { motionConditions } from "@/lib/motion";
 import { Reveal } from "@/components/motion/Reveal";
 import { getLenis } from "@/components/providers/SmoothScroll";
 import { useSealSection } from "@/components/three/useSealSection";
-import { selectedWork } from "@/content/home";
+import { selectedWork, type HomeProject } from "@/content/home";
 
 const IMAGE_SPEED = 0.85;
 
@@ -17,7 +17,7 @@ const IMAGE_SPEED = 0.85;
  * horizontal track and each image drifts at 0.85x inside its frame. On mobile or
  * with reduced motion it is a native swipe carousel with scroll snap and no pin.
  */
-export function SelectedWork() {
+export function SelectedWork({ projects }: { projects: HomeProject[] }) {
   const ref = useRef<HTMLElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLUListElement>(null);
@@ -111,7 +111,7 @@ export function SelectedWork() {
         className="snap-x snap-mandatory overflow-x-auto overscroll-x-contain scroll-px-margin [scrollbar-width:none] data-[pin=on]:snap-none data-[pin=on]:overflow-hidden"
       >
         <ul ref={track} className="flex w-max gap-gutter px-margin will-change-transform">
-          {selectedWork.projects.map((p) => (
+          {projects.map((p) => (
             <li key={p.slug} data-work-card className="w-[78vw] shrink-0 snap-start md:w-[38vw] lg:w-[32vw]">
               <Link href={`/work/${p.slug}`} data-cursor="view" className="group flex flex-col gap-s2">
                 <div data-ripple className="relative aspect-[4/5] overflow-hidden rounded-sm bg-graphite">

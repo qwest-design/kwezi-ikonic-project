@@ -5,15 +5,16 @@ import { SEAL_PARKED, SealZone } from "@/components/three/SealZone";
 import { Beliefs } from "@/components/studio/Beliefs";
 import { studioPage } from "@/content/pages";
 import Link from "next/link";
-import { clientHref, clients } from "@/content/home";
+import { getClients, getTeam } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Studio",
   description: "Ikonic Designs is a South African brand and digital studio: normal people with unreasonable standards.",
 };
 
-export default function StudioPage() {
-  const { title, intro, beliefsTitle, beliefs, teamTitle, team, clientsTitle } = studioPage;
+export default async function StudioPage() {
+  const { title, intro, beliefsTitle, beliefs, teamTitle, clientsTitle } = studioPage;
+  const [team, clients] = await Promise.all([getTeam(), getClients()]);
   return (
     <main id="main" tabIndex={-1} className="pt-s7 outline-none">
       <SealZone initial pose={{ x: 0.36, y: 0.28, rotY: -0.4, scale: 0.42, mobile: { x: 0.32, y: 0.36, scale: 0.28 } }} className="grid-site gap-y-s3 pt-s5 pb-s7">
@@ -62,8 +63,8 @@ export default function StudioPage() {
             {clientsTitle}
           </Reveal>
           <ul className="col-span-full grid grid-cols-2 border-t border-l border-bone/15 sm:grid-cols-3 lg:grid-cols-5">
-            {clients.logos.map((c) => {
-              const href = clientHref(c);
+            {clients.map((c) => {
+              const href = c.href;
               const art = (
                 <div className="absolute inset-[22%]">
                   <Image src={c.logo} alt={c.name} fill unoptimized className="object-contain opacity-70 grayscale" />

@@ -39,6 +39,8 @@ export type CaseStudy = {
   /** Two to four results. */
   impact: Result[];
   quote?: { text: string; name: string; role: string };
+  /** Slug of the project the "Next project" panel shows. Defaults to the next in order. */
+  next?: string;
 };
 
 const TS = "[TO SUPPLY]";

@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/motion/Reveal";
 import { WorkExplorer } from "@/components/work/WorkExplorer";
 import { SEAL_PARKED, SealZone } from "@/components/three/SealZone";
-import { caseStudies, workIndex } from "@/content/work";
+import { workIndex } from "@/content/work";
+import { getCaseStudies } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Work",
   description: "Selected brand, identity, digital and motion work by Ikonic Designs.",
 };
 
-export default function WorkPage() {
+export default async function WorkPage() {
+  const caseStudies = await getCaseStudies();
   return (
     <main id="main" tabIndex={-1} className="flex flex-col gap-s5 pt-s7 pb-s7 outline-none">
       <SealZone initial pose={{ x: 0.36, y: 0.3, rotY: -0.4, scale: 0.42, mobile: { x: 0.3, y: 0.36, scale: 0.32 } }}>

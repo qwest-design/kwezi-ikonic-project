@@ -90,6 +90,19 @@ All of it is mounted once in `src/app/layout.tsx`; components live in `src/compo
 - /work filters are kept in the URL as `?discipline=identity`.
 - Client logos link to their case study when `caseStudy` is set on the client in `src/content/home.ts`.
 
+## Content (WordPress)
+
+Projects, Clients, Team members and the Proof numbers come from headless WordPress
+through WPGraphQL when `WORDPRESS_GRAPHQL_URL` is set, and from the typed files in
+`src/content` when it isn't (local development needs no CMS). All reads live in
+`src/lib/content.ts`, are cached and tagged (`projects`, `clients`, `team`,
+`settings`), and pages are prerendered from that cache.
+
+When content changes, WordPress calls `POST /api/revalidate` with the
+`x-revalidate-secret` header and the tags to refresh. Projects added in WordPress
+after a deploy get their `/work/<slug>` page on first visit. WordPress setup (plugins,
+post types, field names, the refresh plugin) is in `wordpress/README.md`.
+
 ## Tests
 
 `npm run test:e2e` builds the site and runs Playwright against the production server:
