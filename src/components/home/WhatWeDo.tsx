@@ -70,13 +70,13 @@ export function WhatWeDo() {
             className="relative flex min-h-[60svh] origin-top flex-col justify-between overflow-hidden rounded-sm border border-bone/10 bg-graphite p-s3 will-change-transform md:p-s5 in-data-[stack=on]:[grid-area:1/1] in-data-[stack=on]:h-full"
           >
             <div className="flex items-start justify-between gap-s3">
-              <span className="font-mono text-h3 text-signal">{card.index}</span>
+              <span className="font-mono text-h3 text-signal-bright">{card.index}</span>
               <h3 id={`cap-${card.index}`} className="font-display-tight text-h2">
                 {/* The link's ::after covers the whole card, so the card is the click target. */}
                 <Link
                   href={`/capabilities#${card.title.toLowerCase()}`}
                   data-cursor="view"
-                  className="after:absolute after:inset-0 after:z-10 focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:-outline-offset-4 focus-visible:after:outline-signal"
+                  className="after:absolute after:inset-0 after:z-10 focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:-outline-offset-4 focus-visible:after:outline-signal-bright"
                 >
                   {card.title}
                 </Link>

@@ -2,8 +2,8 @@ import { contactDetails } from "@/content/pages";
 import { socialLinks } from "@/content/social";
 
 const link =
-  "underline decoration-bone/30 underline-offset-[6px] transition-[text-decoration-color] duration-(--duration-ui) hover:decoration-signal " +
-  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal";
+  "underline decoration-bone/30 underline-offset-[6px] transition-[text-decoration-color] duration-(--duration-ui) hover:decoration-signal-bright " +
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal-bright";
 
 /** Emails, phone and social profiles. Networks without a URL in content/social.ts are left out. */
 export function ContactDetails() {

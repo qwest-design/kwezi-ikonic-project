@@ -66,7 +66,7 @@ export function Beliefs({ title, beliefs }: { title: string; beliefs: string[] }
             {title}
           </h2>
           <p aria-hidden="true" className="type-label col-span-2 hidden text-right text-mist in-data-[scroll=on]:block md:col-start-11">
-            <span className="text-signal">{pad(index + 1)}</span> / {pad(beliefs.length)}
+            <span className="text-signal-bright">{pad(index + 1)}</span> / {pad(beliefs.length)}
           </p>
         </div>
         <ol className="grid-site relative gap-y-s5 in-data-[scroll=on]:min-h-[50svh]">
@@ -77,7 +77,7 @@ export function Beliefs({ title, beliefs }: { title: string; beliefs: string[] }
               aria-current={i === index ? "step" : undefined}
               className="col-span-full flex gap-s3 font-display-tight text-h2 md:col-span-10 in-data-[scroll=on]:absolute in-data-[scroll=on]:inset-x-margin in-data-[scroll=on]:top-0"
             >
-              <span className="type-label shrink-0 pt-s2 text-signal">{pad(i + 1)}</span>
+              <span className="type-label shrink-0 pt-s2 text-signal-bright">{pad(i + 1)}</span>
               <span>{b}</span>
             </li>
           ))}

@@ -19,7 +19,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 const toggleClasses =
   "type-label min-h-11 rounded-full border px-s2 transition-[background-color,color,border-color] duration-(--duration-ui) " +
   "border-bone/25 text-bone/80 hover:border-bone hover:text-bone aria-pressed:border-bone aria-pressed:bg-bone aria-pressed:text-ink " +
-  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal";
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal-bright";
 
 /**
  * The /work index: discipline filters and a grid/list toggle.

@@ -7,7 +7,7 @@ import type { CaseStudy, Media } from "@/content/work";
 export function SectionLabel({ index, children, id }: { index: string; children: ReactNode; id?: string }) {
   return (
     <h2 id={id} className="type-label text-mist">
-      <span className="text-signal">{index}</span> / {children}
+      <span className="text-signal-bright">{index}</span> / {children}
     </h2>
   );
 }

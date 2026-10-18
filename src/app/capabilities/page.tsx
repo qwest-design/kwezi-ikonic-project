@@ -38,7 +38,7 @@ export default function CapabilitiesPage() {
             className="grid-site gap-y-s4 border-t border-bone/15 py-s7"
           >
             <p className="type-label col-span-full text-mist">
-              <span className="text-signal">{d.index}</span> / <span id={`discipline-${d.index}`}>{d.title}</span>
+              <span className="text-signal-bright">{d.index}</span> / <span id={`discipline-${d.index}`}>{d.title}</span>
             </p>
             <Reveal as="h2" className="col-span-full font-display-tight text-h1 md:col-span-10">
               {d.headline}

@@ -188,7 +188,7 @@ export function Menu() {
           className="font-display-tight text-[1.75rem] leading-none"
           aria-label="Ikonic Designs, home"
         >
-          Ikonic<span className="text-signal">.</span>
+          Ikonic<span className="text-signal-bright">.</span>
         </Link>
         <Button variant="secondary" onClick={close}>
           Close
@@ -211,7 +211,7 @@ export function Menu() {
                   onBlur={() => setActive((a) => (a === i ? null : a))}
                   className="group inline-flex items-start gap-s2 py-[0.04em] font-display-tight leading-[0.92] text-bone outline-offset-8 [font-size:min(var(--text-hero-size),15svh,15vw)] aria-[current=page]:text-mist"
                 >
-                  <span className="type-label pt-[0.6em] text-mist group-hover:text-signal">
+                  <span className="type-label pt-[0.6em] text-mist group-hover:text-signal-bright">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <span>{item.label}</span>

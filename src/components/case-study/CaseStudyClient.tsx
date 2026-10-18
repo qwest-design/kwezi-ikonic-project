@@ -166,7 +166,7 @@ export function NextProject({ next, index, total }: { next: CaseStudy; index: nu
             ref={link}
             href={`/work/${next.slug}`}
             data-cursor="view"
-            className="col-span-full font-display-tight text-hero break-words focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-signal"
+            className="col-span-full font-display-tight text-hero break-words focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-signal-bright"
           >
             {next.title}
           </Link>

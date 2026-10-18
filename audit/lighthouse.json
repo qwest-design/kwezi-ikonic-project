@@ -1,17 +1,19 @@
 [
   {
     "route": "/",
-    "performance": 96,
+    "performance": 88,
     "accessibility": 100,
     "bestPractices": 100,
     "seo": 100,
-    "lcp": 1862,
+    "lcp": 2761,
     "cls": 0,
-    "tbt": 213,
-    "fcp": 759,
+    "tbt": 355,
+    "fcp": 1222,
     "lcpElement": "h1#home-hero-title",
     "failing": [],
-    "perfOpportunities": []
+    "perfOpportunities": [
+      "unused-javascript 150ms"
+    ]
   },
   {
     "route": "/work",
@@ -19,10 +21,10 @@
     "accessibility": 100,
     "bestPractices": 100,
     "seo": 100,
-    "lcp": 2434,
+    "lcp": 2442,
     "cls": 0,
-    "tbt": 35,
-    "fcp": 1209,
+    "tbt": 61,
+    "fcp": 1208,
     "lcpElement": "img.object-cover",
     "failing": [],
     "perfOpportunities": [
@@ -31,32 +33,18 @@
   },
   {
     "route": "/work/the-gardens",
-    "performance": 99,
+    "performance": 97,
     "accessibility": 100,
     "bestPractices": 100,
     "seo": 100,
-    "lcp": 1879,
+    "lcp": 2390,
     "cls": 0,
-    "tbt": 69,
-    "fcp": 797,
+    "tbt": 94,
+    "fcp": 1219,
     "lcpElement": "h1#case-title",
     "failing": [],
-    "perfOpportunities": []
-  },
-  {
-    "route": "/work/door",
-    "performance": 98,
-    "accessibility": 100,
-    "bestPractices": 100,
-    "seo": 100,
-    "lcp": 2364,
-    "cls": 0,
-    "tbt": 42,
-    "fcp": 1210,
-    "lcpElement": "img.object-cover",
-    "failing": [],
     "perfOpportunities": [
-      "unused-javascript 150ms"
+      "unused-javascript 160ms"
     ]
   },
   {
@@ -65,24 +53,26 @@
     "accessibility": 100,
     "bestPractices": 100,
     "seo": 100,
-    "lcp": 1855,
+    "lcp": 2006,
     "cls": 0,
-    "tbt": 69,
-    "fcp": 757,
+    "tbt": 37,
+    "fcp": 759,
     "lcpElement": "h1.col-span-full",
     "failing": [],
-    "perfOpportunities": []
+    "perfOpportunities": [
+      "unused-javascript 150ms"
+    ]
   },
   {
     "route": "/studio",
-    "performance": 99,
+    "performance": 98,
     "accessibility": 100,
     "bestPractices": 100,
     "seo": 100,
-    "lcp": 2110,
+    "lcp": 2439,
     "cls": 0,
-    "tbt": 45,
-    "fcp": 757,
+    "tbt": 33,
+    "fcp": 1214,
     "lcpElement": "h1.col-span-full",
     "failing": [],
     "perfOpportunities": [
@@ -91,14 +81,14 @@
   },
   {
     "route": "/contact",
-    "performance": 99,
+    "performance": 97,
     "accessibility": 100,
     "bestPractices": 100,
     "seo": 100,
-    "lcp": 1551,
+    "lcp": 2262,
     "cls": 0,
-    "tbt": 74,
-    "fcp": 758,
+    "tbt": 128,
+    "fcp": 1209,
     "lcpElement": "h1.col-span-full",
     "failing": [],
     "perfOpportunities": []

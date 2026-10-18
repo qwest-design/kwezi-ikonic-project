@@ -39,7 +39,7 @@ const socialText = { facebook: "Facebook", instagram: "Instagram", twitter: "Twi
 
 const linkClass =
   "text-bone/70 transition-colors duration-(--duration-ui) hover:text-bone " +
-  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal";
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal-bright";
 
 function Column({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -124,7 +124,7 @@ export async function SiteFooter() {
               <Image src={FOOTER_LOGO.src} alt="Ikonic" width={FOOTER_LOGO.width} height={FOOTER_LOGO.height} className="h-s4 w-auto" />
             ) : (
               <span className="font-display-tight text-[1.75rem] leading-none text-bone">
-                Ikonic<span className="text-signal">.</span>
+                Ikonic<span className="text-signal-bright">.</span>
               </span>
             )}
           </Link>

@@ -7,8 +7,8 @@ import { useFrame } from "@react-three/fiber";
 export type StampRingHandle = { emit: (at: THREE.Vector3, scale: number) => void };
 
 const DURATION = 0.9;
-// HDR colour (> 1) so only the ring crosses the Bloom threshold. Signal orange for now.
-const RING_COLOR = new THREE.Color("#ff4d1f").multiplyScalar(8);
+// HDR colour (> 1) so only the ring crosses the Bloom threshold. Signal blue.
+const RING_COLOR = new THREE.Color("#003ce5").multiplyScalar(8);
 
 /** A ring of light that expands and fades from the seal's edge on impact. */
 export const StampRing = forwardRef<StampRingHandle, { onActiveChange: (active: boolean) => void }>(

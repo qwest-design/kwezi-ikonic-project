@@ -81,7 +81,7 @@ export function FourDs({ title, steps }: { title: string; steps: Step[] }) {
                   style={{ left: `${(i / (steps.length - 1)) * 100}%`, opacity: lit ? 1 : 0.35 }}
                 >
                   <span aria-hidden="true" className="hidden h-s1 w-s1 -translate-y-1/2 self-center rounded-full bg-signal md:block" />
-                  <span className="type-label text-signal md:pt-s3 md:text-center">
+                  <span className="type-label text-signal-bright md:pt-s3 md:text-center">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="font-display-tight text-h3 md:text-center">{s.name}</h3>

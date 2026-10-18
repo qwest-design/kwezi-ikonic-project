@@ -16,11 +16,11 @@ const chip =
   "type-label inline-flex min-h-11 cursor-pointer items-center rounded-full border border-bone/25 px-s2 text-bone/80 select-none " +
   "transition-[background-color,color,border-color] duration-(--duration-ui) hover:border-bone hover:text-bone " +
   "peer-checked:border-bone peer-checked:bg-bone peer-checked:text-ink " +
-  "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-signal";
+  "peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-signal-bright";
 
 const field =
   "w-full border-0 border-b border-bone/25 bg-transparent px-0 py-s2 text-body text-bone placeholder:text-mist/70 " +
-  "transition-[border-color] duration-(--duration-ui) focus:border-signal focus:outline-none aria-invalid:border-signal";
+  "transition-[border-color] duration-(--duration-ui) focus:border-signal-bright focus:outline-none aria-invalid:border-signal-bright";
 
 /**
  * The four-step project brief. One question per screen with a progress bar.
@@ -139,7 +139,7 @@ export function BriefForm() {
 
   const err = (name: string) =>
     errors[name] ? (
-      <p id={`${name}-error`} className="type-label pt-s1 text-signal">
+      <p id={`${name}-error`} className="type-label pt-s1 text-signal-bright">
         {errors[name]}
       </p>
     ) : null;
@@ -242,7 +242,7 @@ export function BriefForm() {
         </Button>
       </div>
       {failed && (
-        <p role="alert" className="max-w-[48ch] text-body text-signal">
+        <p role="alert" className="max-w-[48ch] text-body text-signal-bright">
           {contactPage.failure}
         </p>
       )}

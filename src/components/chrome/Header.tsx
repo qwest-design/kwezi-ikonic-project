@@ -68,7 +68,7 @@ export function Header() {
     >
       <div className="flex items-center justify-between gap-s3 px-margin py-s2">
         <Link href="/" className="font-display-tight text-[1.75rem] leading-none" aria-label="Ikonic Designs, home">
-          Ikonic<span className="text-signal">.</span>
+          Ikonic<span className="text-signal-bright">.</span>
         </Link>
         <nav aria-label="Primary" className="flex items-center gap-s2 md:gap-s3">
           <Link href="/work" className="type-label hidden underline-offset-[6px] hover:underline sm:inline">

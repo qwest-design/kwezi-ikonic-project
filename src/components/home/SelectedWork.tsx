@@ -148,10 +148,10 @@ export function SelectedWork({ projects }: { projects: HomeProject[] }) {
             <Link
               href={selectedWork.allLink.href}
               data-cursor="view"
-              className="group flex aspect-[4/5] flex-col justify-end rounded-sm border border-bone/15 p-s3 transition-colors duration-(--duration-ui) hover:border-signal"
+              className="group flex aspect-[4/5] flex-col justify-end rounded-sm border border-bone/15 p-s3 transition-colors duration-(--duration-ui) hover:border-signal-bright"
             >
               <span className="font-display-tight text-h2">{selectedWork.allLink.label}</span>
-              <span aria-hidden="true" className="type-label pt-s2 text-signal">
+              <span aria-hidden="true" className="type-label pt-s2 text-signal-bright">
                 → /work
               </span>
             </Link>

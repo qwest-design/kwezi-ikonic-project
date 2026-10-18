@@ -16,7 +16,8 @@ const colours = [
   { name: "bone", hex: "#F2EFE9", swatch: "bg-bone", note: "Text · 17.1:1 on ink" },
   { name: "graphite", hex: "#1A1A1D", swatch: "bg-graphite", note: "Surfaces" },
   { name: "mist", hex: "#8A8A8F", swatch: "bg-mist", note: "Secondary text · 5.7:1 on ink" },
-  { name: "signal", hex: "#FF4D1F", swatch: "bg-signal", note: "Accent · 5.9:1 on ink · placeholder" },
+  { name: "signal", hex: "#003CE5", swatch: "bg-signal", note: "Fills only · bone on it 6.6:1" },
+  { name: "signal-bright", hex: "#5980EE", swatch: "bg-signal-bright", note: "Text and lines on dark · 5.4:1 on ink" },
 ] as const;
 
 const typeScale = [
@@ -269,7 +270,7 @@ export default function StyleguidePage() {
         <ul className="flex flex-wrap gap-s3">
           {routes.map((r) => (
             <li key={r.href}>
-              <Link href={r.href} className="font-mono text-sm underline decoration-bone/30 underline-offset-4 hover:decoration-signal">
+              <Link href={r.href} className="font-mono text-sm underline decoration-bone/30 underline-offset-4 hover:decoration-signal-bright">
                 {r.label}
               </Link>
             </li>

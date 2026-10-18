@@ -84,7 +84,7 @@ export function Cursor() {
       className="pointer-events-none fixed top-0 left-0 z-[100] flex items-center justify-center rounded-full bg-signal will-change-transform"
       style={{ width: SIZE, height: SIZE, opacity: 0 }}
     >
-      <span ref={label} className="type-label text-ink opacity-0" />
+      <span ref={label} className="type-label text-on-signal opacity-0" />
     </div>
   );
 }

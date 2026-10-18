@@ -9,22 +9,23 @@ const base =
   "group/btn relative inline-flex items-center justify-center gap-s1 rounded-full px-s3 min-h-12 " +
   "type-label whitespace-nowrap select-none " +
   "transition-[scale,opacity,background-color,color,border-color] duration-(--duration-ui) ease-expo-out " +
-  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal " +
+  "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal-bright " +
   "active:scale-[0.97] data-[preview=active]:scale-[0.97] " +
-  "data-[preview=focus]:outline-2 data-[preview=focus]:outline-offset-4 data-[preview=focus]:outline-signal " +
+  "data-[preview=focus]:outline-2 data-[preview=focus]:outline-offset-4 data-[preview=focus]:outline-signal-bright " +
   "disabled:pointer-events-none disabled:opacity-40 aria-disabled:pointer-events-none aria-disabled:opacity-40";
 
 const variants: Record<ButtonVariant, string> = {
-  // Ink on signal: ~5.9:1. Bone on signal fails AA, so never use it here.
+  // Bone on signal blue: 6.6:1. Ink on it fails AA (2.6:1), so never use it here.
   primary:
-    "bg-signal text-ink hover:bg-bone data-[preview=hover]:bg-bone data-[preview=active]:bg-bone",
+    "bg-signal text-on-signal hover:bg-bone hover:text-ink data-[preview=hover]:bg-bone data-[preview=hover]:text-ink " +
+    "data-[preview=active]:bg-bone data-[preview=active]:text-ink",
   secondary:
     "border border-bone/40 text-bone hover:border-bone hover:bg-bone hover:text-ink " +
     "data-[preview=hover]:border-bone data-[preview=hover]:bg-bone data-[preview=hover]:text-ink " +
     "data-[preview=active]:border-bone data-[preview=active]:bg-bone data-[preview=active]:text-ink",
   ghost:
-    "px-0 text-bone underline decoration-bone/30 underline-offset-[6px] hover:decoration-signal " +
-    "data-[preview=hover]:decoration-signal data-[preview=active]:decoration-signal",
+    "px-0 text-bone underline decoration-bone/30 underline-offset-[6px] hover:decoration-signal-bright " +
+    "data-[preview=hover]:decoration-signal-bright data-[preview=active]:decoration-signal-bright",
 };
 
 type Common = {
