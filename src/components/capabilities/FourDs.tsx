@@ -69,7 +69,7 @@ export function FourDs({ title, steps }: { title: string; steps: Step[] }) {
         </div>
         <div className="relative px-[10vw] in-data-[scroll=on]:absolute in-data-[scroll=on]:inset-x-0 in-data-[scroll=on]:top-1/2">
           <div className="relative h-px bg-bone/20" aria-hidden="true">
-            <span ref={fill} className="absolute inset-0 origin-left bg-signal" style={{ transform: "scaleX(0)" }} />
+            <span ref={fill} className="absolute inset-0 origin-left bg-signal-bright" style={{ transform: "scaleX(0)" }} />
           </div>
           <ol className="grid grid-cols-1 gap-s4 pt-s4 sm:grid-cols-2 md:absolute md:inset-x-[10vw] md:top-0 md:block md:pt-0">
             {steps.map((s, i) => {
@@ -80,7 +80,7 @@ export function FourDs({ title, steps }: { title: string; steps: Step[] }) {
                   className="flex flex-col gap-s1 transition-opacity duration-(--duration-ui) md:absolute md:w-[18vw] md:-translate-x-1/2"
                   style={{ left: `${(i / (steps.length - 1)) * 100}%`, opacity: lit ? 1 : 0.35 }}
                 >
-                  <span aria-hidden="true" className="hidden h-s1 w-s1 -translate-y-1/2 self-center rounded-full bg-signal md:block" />
+                  <span aria-hidden="true" className="hidden h-s1 w-s1 -translate-y-1/2 self-center rounded-full bg-signal-bright md:block" />
                   <span className="type-label text-signal-bright md:pt-s3 md:text-center">
                     {String(i + 1).padStart(2, "0")}
                   </span>

@@ -36,7 +36,7 @@ export function Hero() {
       </div>
       <a href="#manifesto" className="col-span-full flex items-center gap-s2 justify-self-start type-label text-mist md:col-start-10 md:col-end-13 md:justify-self-end hover:text-bone focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal-bright">
         <span aria-hidden="true" className="relative block h-s4 w-px overflow-hidden bg-graphite">
-          <span className="scroll-cue-line absolute inset-0 block bg-signal" />
+          <span className="scroll-cue-line absolute inset-0 block bg-signal-bright" />
         </span>
         {hero.scrollCue}
       </a>

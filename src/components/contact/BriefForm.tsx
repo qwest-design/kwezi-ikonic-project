@@ -157,7 +157,7 @@ export function BriefForm() {
         </p>
         <div className="relative h-px w-full bg-bone/20" aria-hidden="true">
           <span
-            className="absolute inset-0 origin-left bg-signal transition-transform duration-(--duration-ui) ease-expo-out"
+            className="absolute inset-0 origin-left bg-signal-bright transition-transform duration-(--duration-ui) ease-expo-out"
             style={{ transform: `scaleX(${(step + 1) / STEPS.length})` }}
           />
         </div>

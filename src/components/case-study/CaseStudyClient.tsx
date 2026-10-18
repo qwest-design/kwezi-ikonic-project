@@ -174,7 +174,7 @@ export function NextProject({ next, index, total }: { next: CaseStudy; index: nu
           <div className="col-span-full hidden items-center gap-s2 pt-s2 in-data-[scroll=on]:flex">
             <span className="type-label shrink-0 text-mist">Keep scrolling</span>
             <span className="relative h-px flex-1 bg-bone/20">
-              <span ref={bar} className="absolute inset-0 origin-left bg-signal" style={{ transform: "scaleX(0)" }} />
+              <span ref={bar} className="absolute inset-0 origin-left bg-signal-bright" style={{ transform: "scaleX(0)" }} />
             </span>
           </div>
         </div>

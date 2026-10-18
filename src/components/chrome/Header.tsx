@@ -83,7 +83,7 @@ export function Header() {
       <span
         ref={line}
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 block h-px origin-left bg-signal"
+        className="absolute inset-x-0 bottom-0 block h-px origin-left bg-signal-bright"
         style={{ transform: "scaleX(0)" }}
       />
     </header>
